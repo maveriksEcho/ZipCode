@@ -1,0 +1,284 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Zip code",
+        "description": "This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "email": "apiteam@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api",
+            "description": "OpenApi host"
+        }
+    ],
+    "paths": {
+        "/import": {
+            "post": {
+                "tags": [
+                    "Zip Code"
+                ],
+                "summary": "Import data to database",
+                "description": "import",
+                "operationId": "importToDB",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "file": {
+                                        "description": "File to import (max size 10mb)",
+                                        "type": "file",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful import"
+                    },
+                    "422": {
+                        "description": "Invalid data"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "deprecated": true
+            }
+        },
+        "/zip/{zip}": {
+            "get": {
+                "tags": [
+                    "Zip Code"
+                ],
+                "summary": "Get data by zip code",
+                "description": "get by zip",
+                "operationId": "getByZip",
+                "parameters": [
+                    {
+                        "name": "zip",
+                        "in": "path",
+                        "description": "Zip Code",
+                        "required": true,
+                        "explode": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ZipCode"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid data"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "deprecated": true
+            }
+        },
+        "/city/{city}": {
+            "get": {
+                "tags": [
+                    "Zip Code"
+                ],
+                "summary": "Get data by city name",
+                "description": "get by city name",
+                "operationId": "getByCityName",
+                "parameters": [
+                    {
+                        "name": "city",
+                        "in": "path",
+                        "description": "City name (must be at least 2 characters)",
+                        "required": true,
+                        "explode": true
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page",
+                        "required": false
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "per_page",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ZipCode"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid data"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "deprecated": true
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ZipCode": {
+                "title": "ZipCode model",
+                "description": "ZipCode model",
+                "required": [
+                    "zip",
+                    "lat",
+                    "lng",
+                    "city",
+                    "state_id",
+                    "state_name",
+                    "zcta",
+                    "population",
+                    "density",
+                    "county_fips",
+                    "county_name",
+                    "county_weights",
+                    "county_names_all",
+                    "county_fips_all",
+                    "imprecise",
+                    "military",
+                    "timezone"
+                ],
+                "properties": {
+                    "zip": {
+                        "title": "zip",
+                        "description": "zip",
+                        "type": "integer"
+                    },
+                    "lat": {
+                        "title": "lat",
+                        "description": "lat",
+                        "type": "number"
+                    },
+                    "lng": {
+                        "title": "lng",
+                        "description": "lng",
+                        "type": "number"
+                    },
+                    "city": {
+                        "title": "city",
+                        "description": "city",
+                        "type": "string"
+                    },
+                    "state_id": {
+                        "title": "state_id",
+                        "description": "state_id",
+                        "type": "string"
+                    },
+                    "state_name": {
+                        "title": "state_name",
+                        "description": "state_name",
+                        "type": "string"
+                    },
+                    "zcta": {
+                        "title": "zcta",
+                        "description": "zcta",
+                        "type": "boolean"
+                    },
+                    "parent_zcta": {
+                        "title": "parent_zcta",
+                        "description": "parent_zcta",
+                        "type": "string"
+                    },
+                    "population": {
+                        "title": "population",
+                        "description": "population",
+                        "type": "integer"
+                    },
+                    "density": {
+                        "title": "density",
+                        "description": "density",
+                        "type": "number"
+                    },
+                    "county_fips": {
+                        "title": "county_fips",
+                        "description": "county_fips",
+                        "type": "integer"
+                    },
+                    "county_name": {
+                        "title": "county_name",
+                        "description": "county_name",
+                        "type": "string"
+                    },
+                    "county_weights": {
+                        "title": "county_weights",
+                        "description": "county_weights",
+                        "type": "string"
+                    },
+                    "county_names_all": {
+                        "title": "county_names_all",
+                        "description": "county_names_all",
+                        "type": "string"
+                    },
+                    "county_fips_all": {
+                        "title": "county_fips_all",
+                        "description": "county_fips_all",
+                        "type": "string"
+                    },
+                    "imprecise": {
+                        "title": "imprecise",
+                        "description": "imprecise",
+                        "type": "boolean"
+                    },
+                    "military": {
+                        "title": "military",
+                        "description": "military",
+                        "type": "boolean"
+                    },
+                    "timezone": {
+                        "title": "timezone",
+                        "description": "timezone",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Zip Code",
+            "description": "Sample package to test out the greeting APIs"
+        }
+    ],
+    "externalDocs": {
+        "description": "Find out more about Swagger",
+        "url": "http://swagger.io"
+    }
+}
